@@ -24,7 +24,7 @@ def getLog(logfile):
     # Formatter especifico
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-    # Añadir dos handler: fichero y consola
+    # Añadir dos handler: fichero y consolacopy
     fh = logging.FileHandler(logfile)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)

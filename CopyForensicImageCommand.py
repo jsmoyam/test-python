@@ -53,6 +53,9 @@ class CopyForensicImageCommand:
             Comandos.log.info('No files to process')
             return
 
+        # Crear carpeta destino si no existe
+        util.create_folder_if_not_exist(self.destinationFolder)
+
         # Copiar solo los ficheros filtrados
         incomingFilesFullPath = list()
         for file in incomingFilesFiltered:

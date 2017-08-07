@@ -1,13 +1,26 @@
 # Fichero de utilidades
 
 import hashlib
-import os
+import os, os.path
 import shlex
 import datetime
 import subprocess
 
 # Calcula el md5 de un fichero
-def get_md5(fileName): return hashlib.md5(open(fileName, 'rb').read()).hexdigest()
+def get_md5(fileName):
+    # Esta forma da errores de memoria al intentar cargar ficheros muy grandes
+    # return hashlib.md5(open(fileName, 'rb').read()).hexdigest()
+
+    # Es mejor hacer el hash por pasos aprovechandose de que cada chunk interno de md5 es de 128 bytes
+    read_size = 1024
+    checksum = hashlib.md5()
+    with open(fileName, 'rb') as f:
+        data = f.read(read_size)
+        while data:
+            checksum.update(data)
+            data = f.read(read_size)
+    checksum = checksum.hexdigest()
+    return checksum
 
 
 # Devuelve el basename de un fichero con su ruta completa
@@ -59,3 +72,8 @@ def read_file(file_name):
     with open(file_name) as f:
         lines = f.read().split('\n')
     return lines
+
+
+# Crea un directorio. Si ya existe no hace nada
+def create_folder_if_not_exist(folder):
+    if not os.path.exists(folder): os.makedirs(folder)
