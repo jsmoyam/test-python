@@ -4,7 +4,7 @@ import hashlib
 import os
 import shlex
 import datetime
-
+import subprocess
 
 # Calcula el md5 de un fichero
 def get_md5(fileName): return hashlib.md5(open(fileName, 'rb').read()).hexdigest()
@@ -41,3 +41,21 @@ def split_with_quotes(value):
     lex.whitespace_split = True
     lex.commenters = ''
     return list(lex)
+
+
+# Ejecutar un comando del sistema operativo devolviendo su salida y errorlevel
+def execute_shell(command):
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    output = list()
+    for line in p.stdout.readlines():
+        output.append(line.strip().decode('utf-8'))
+    retval = p.wait()
+
+    return join_list('\n', output), retval
+
+
+# Lee un fichero de texto devolviendo sus lineas en una lista
+def read_file(file_name):
+    with open(file_name) as f:
+        lines = f.read().split('\n')
+    return lines

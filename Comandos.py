@@ -9,6 +9,8 @@ import util
 import CopyForensicImageCommand
 import ListIncomingCommand
 import ListCommand
+import MmlsCommand
+import ShellCommand
 
 # Variables que el interprete tiene definidas
 VARIABLES = {'INCOMING_FOLDER': 'INCOMING_FOLDER', 'DESTINATION_FOLDER': 'DESTINATION_FOLDER'}
@@ -131,7 +133,7 @@ class Comandos(cmd.Cmd):
             print('This command has no arguments')
             return
 
-        # Detectar que estan definidas las variables INCOMING_FOLDER y DESTINATION_FOLDER
+        # Detectar que esta definida la variable INCOMING_FOLDER
         if not hasattr(self, VARIABLES.get('INCOMING_FOLDER')):
             print('Variable INCOMING_FOLDER must exist. Please set before copy')
             return
@@ -146,6 +148,48 @@ class Comandos(cmd.Cmd):
         ListCommand.ListCommand(argsList).execute()
         print('Command sucessful')
 
+    def do_mmls(self, args):
+        """Execute mmls over copied file: mmls file.E01"""
+
+        argsList = util.split_with_quotes(args)
+        if len(argsList) != 1:
+            print('Syntax error')
+            return
+
+        # Detectar que esta definida la variable DESTINATION_FOLDER
+        if not hasattr(self, VARIABLES.get('DESTINATION_FOLDER')):
+            print('Variable DESTINATION_FOLDER must exist. Please set before copy')
+            return
+
+        MmlsCommand.MmlsCommand(getattr(self, VARIABLES.get('DESTINATION_FOLDER')), argsList[0]).execute()
+        print('Command sucessful')
+
+    def do_shell(self, args):
+        """Execute shell command: ls -la"""
+
+        argsList = util.split_with_quotes(args)
+        ShellCommand.ShellCommand(argsList).execute()
+        print('Command sucessful')
+
+    def do_run(self, args):
+        """Execute script with commands: run script.one"""
+
+        try:
+            # Leer fichero en una lista
+            commands = util.read_file(args)
+
+            # Eliminar lineas vacias del fichero
+            commands = [x for x in commands if x]
+
+            # Ejecutar todos los comandos
+            for command in commands:
+                print('Execute ' + command)
+                interpreter.onecmd(command)
+
+            print('Command sucessful')
+        except:
+            print('File error: ' + args)
+
     def do_exit(self, args):
         """Exit from interpreter"""
         print('See you soon!')
@@ -158,9 +202,9 @@ class Comandos(cmd.Cmd):
 
 if __name__ == '__main__':
     interpreter = Comandos()
-    interpreter.onecmd('set INCOMING_FOLDER /vagrant/files')
-    interpreter.onecmd('set DESTINATION_FOLDER /home/juan/tmp')
-    interpreter.onecmd('list_incoming')
+    # interpreter.onecmd('set INCOMING_FOLDER /vagrant/files')
+    # interpreter.onecmd('set DESTINATION_FOLDER /home/juan/tmp')
+    # interpreter.onecmd('list_incoming')
     # interpreter.onecmd('copy 1 1 1')
     # interpreter.onecmd('copy 1 1 1 cfreds_2015_data_leakage_rm#2.E01')
     # interpreter.onecmd('copy 2 2 2 cfreds_2015_data_leakage_rm#2.E01')
@@ -168,4 +212,8 @@ if __name__ == '__main__':
     # interpreter.onecmd('list caseName like "2" and idCase==2')
     # interpreter.onecmd('list caseName like "2" and idCase==2 order by copyTime desc')
     # interpreter.onecmd('list caseName like "2" and idCase==2 and copyTime < "2017-08-07 00:14:00"')
+    # interpreter.onecmd('mmls ')
+    # interpreter.onecmd('mmls cfreds_2015_data_leakage_rm#2.E01')
+    # interpreter.onecmd('shell ls -la')
+    # interpreter.onecmd('run script.one')
     interpreter.cmdloop()
