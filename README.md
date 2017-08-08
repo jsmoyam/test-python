@@ -16,4 +16,5 @@ O bien crear un script con esos dos comandos ya incluidos y ejecutarlo con <br /
   
 Para ver todos los comandos disponibles escribir "help". Haciendo "help comando" se puede visualizar el detalle de cada comando.
 
-El script change_permissions.sh contiene el script bash para visualizar ficheros/directorios en funcion de permisos y modificar permisos de manera masiva
+El script change_permissions.sh contiene el script bash para visualizar ficheros/directorios en funcion de permisos y modificar permisos de manera masiva:<br />
+  change_permissions.sh /folder1 /folder2 /folder3 ... /folderN<br />
