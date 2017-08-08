@@ -1,0 +1,5 @@
+shell echo hola
+set INCOMING_FOLDER /vagrant/files
+set DESTINATION_FOLDER /home/juan/tmp
+list_incoming
+shell echo adios
