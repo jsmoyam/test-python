@@ -1,17 +1,17 @@
 # test-python
 
-Fichero principal Comandos.py: 
-  python3 Comandos.py
+Fichero principal Comandos.py<br />
+  python3 Comandos.py<br />
   
-Es necesario tener las librerias peewee y terminaltables instaladas:
-  pip3 install peewee
-  pip3 install terminaltables
+Es necesario tener las librerias peewee y terminaltables instaladas:<br />
+  pip3 install peewee<br />
+  pip3 install terminaltables<br />
   
-Una vez dentro hay que definir las variables INCOMING_FOLDER y DESTINATION_FOLDER:
-  set INCOMING_FOLDER /path/to/incoming/folder
-  set DESTINATION_FOLDER /path/to/destination/folder
+Una vez dentro hay que definir las variables INCOMING_FOLDER y DESTINATION_FOLDER:<br />
+  set INCOMING_FOLDER /path/to/incoming/folder<br />
+  set DESTINATION_FOLDER /path/to/destination/folder<br />
 
-O bien crear un script con esos dos comandos ya incluidos y ejecutarlo con 
-  run script.one
+O bien crear un script con esos dos comandos ya incluidos y ejecutarlo con <br />
+  run script.one<br />
 
 El script change_permissions.sh contiene el script bash para visualizar ficheros/directorios en funcion de permisos y modificar permisos de manera masiva
